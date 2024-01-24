@@ -19,6 +19,7 @@ public class FP01Structured {
             System.out.println(number);
         }
     }
+
     private static void printEvenNumbersInListStructured(List<Integer> numbers) {
         for (int number : numbers) {
             if (number % 2 == 0) {
