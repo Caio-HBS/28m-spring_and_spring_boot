@@ -8,6 +8,8 @@
   <body>
     <div>
       <h1>Welcome ${name}</h1>
+      <hr>
+      <a href="list-todos">Manage my todos</a>
     </div>
   </body>
 </html>
