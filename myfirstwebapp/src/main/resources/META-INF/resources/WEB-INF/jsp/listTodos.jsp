@@ -14,18 +14,16 @@
       <table class="table">
         <thead>
           <tr>
-            <th>ID</th>
             <th>Description</th>
             <th>Target Date</th>
             <th>Is Completed</th>
-            <th>Update TODO</th>
-            <th>Delete TODO</th>
+            <th></th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
           <c:forEach items="${todos}" var="todo">
             <tr>
-              <td>${todo.id}</td>
               <td>${todo.description}</td>
               <td>${todo.targetDate}</td>
               <td>${todo.done}</td>
