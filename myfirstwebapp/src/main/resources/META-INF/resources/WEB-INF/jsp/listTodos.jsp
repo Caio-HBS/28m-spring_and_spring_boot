@@ -1,14 +1,7 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
-<!DOCTYPE html>
+<%@ include file="common/header.jspf" %>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>List TODOs Page</title>
-    <link href="webjars/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet" >
-  </head>
   <body>
+    <%@ include file="common/navigation.jspf" %>
     <div class="container">
       <h1>Your TODOs</h1>
       <table class="table">
