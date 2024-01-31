@@ -1,8 +1,9 @@
 package com.in28minutes.springboot.myfirstwebapp.todo;
 
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,20 +29,41 @@ public class TodoController {
 
         return "listTodos";
     }
-    @RequestMapping(value="new-todo", method = RequestMethod.GET)
+
+    @RequestMapping(value="new-todo", method=RequestMethod.GET)
     public String showNewTodo(ModelMap model) {
-        Todo todo = new Todo(0, (String)model.get("name"), "", LocalDate.now().plusYears(1), false);
+        Todo todo = new Todo(
+                0, (String) model.get("name"), "",
+                LocalDate.now().plusYears(1), false
+        );
         model.put("todo", todo);
         return "todos";
     }
-    @RequestMapping(value="new-todo", method = RequestMethod.POST)
-    public String addTodo(ModelMap model, Todo todo) {
-        String username = (String)model.get("name");
+
+    @RequestMapping(value="new-todo", method=RequestMethod.POST)
+    public String addTodo(ModelMap model, @Valid Todo todo, BindingResult result) {
+        if (result.hasErrors()) {
+            return "todos";
+        }
+
+        String username = (String) model.get("name");
         todoService.addNewTodo(
                 username, todo.getDescription(),
                 LocalDate.now().plusYears(1), false
         );
-
         return "redirect:list-todos";
+    }
+
+    @RequestMapping(value="delete-todo")
+    public String deleteTodo(@RequestParam int id) {
+        todoService.deleteById(id);
+        return "redirect:list-todos";
+    }
+
+    @RequestMapping(value="update-todo")
+    public String showUpdateTodo(@RequestParam int id, ModelMap model) {
+        Todo todo = todoService.getById(id);
+        model.addAttribute("todo", todo);
+        return "todos";
     }
 }
