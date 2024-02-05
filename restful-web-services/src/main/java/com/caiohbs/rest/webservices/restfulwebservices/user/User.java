@@ -1,5 +1,6 @@
 package com.caiohbs.rest.webservices.restfulwebservices.user;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Positive;
@@ -13,9 +14,11 @@ public class User {
     private Integer id;
     @NotNull(message="field 'name' cannot be null")
     @Size(min=2, max=15, message="field 'name' has to be between 2 and 15 characters")
+    @JsonProperty("user_name")
     private String name;
     @NotNull(message="field 'birthDate' cannot be null")
     @Past(message="field 'birthDate' has to be in the past")
+    @JsonProperty("birth_date")
     private LocalDate birthDate;
 
     public User(Integer id, String name, LocalDate birthDate) {
