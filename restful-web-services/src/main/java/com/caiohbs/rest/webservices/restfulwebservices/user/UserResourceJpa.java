@@ -66,7 +66,25 @@ public class UserResourceJpa {
         userRepository.deleteById(id);
     }
 
-    // TODO: add endpoint to singlePostView.
+    @GetMapping(path="/jpa/users/{id}/post/{postId}")
+    public Post getSinglePost(@PathVariable int id, @PathVariable int postId) {
+        Optional<User> user = userRepository.findById(id);
+
+        if (user.isEmpty()) {
+            throw new UserNotFoundException("id: "+id);
+        }
+
+        List<Post> posts = user.get().getPosts();
+        Optional<Post> foundPost = posts.stream().filter(
+                post -> post.getId() == postId
+        ).findFirst();
+
+        if (foundPost.isEmpty()) {
+            throw new PostNotFoundException("postId not found for " + postId);
+        }
+
+        return foundPost.get();
+    }
 
     @GetMapping("/jpa/users/{id}/posts")
     public List<Post> getPostsAllByUserId(@PathVariable int id) {
