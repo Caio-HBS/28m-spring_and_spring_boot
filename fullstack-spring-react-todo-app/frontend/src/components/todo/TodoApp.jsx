@@ -10,6 +10,6 @@ export default function () {
   return (
   <div className="TodoApp">
     <LoginComponent />
-    <WelcomeComponent />
+    {/* <WelcomeComponent /> */}
   </div>);
 }
