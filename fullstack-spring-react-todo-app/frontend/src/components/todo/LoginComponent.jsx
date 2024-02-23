@@ -3,6 +3,8 @@ import React, { useState } from "react";
 export default function LoginComponent() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [submitError, setSubmitError] = useState(false);
+  const [submitSuccess, setSubmitSuccess] = useState(false);
 
   function handleUsernameChange(value) {
     setUsername(value);
@@ -12,8 +14,22 @@ export default function LoginComponent() {
     setPassword(value);
   }
 
+  function handleSubmit() {
+    if (username === "Caio-HBS" && password === "123") {
+      setSubmitSuccess(true);
+    } else {
+      setSubmitError(true);
+    }
+  }
+
   return (
     <div className="Login">
+      {submitSuccess && (
+        <div className="successMessage">Authenticated successfully!</div>
+      )}
+      {submitError && (
+        <div className="errorMessage">Error while trying to authenticate.</div>
+      )}
       <div className="LoginForm">
         <div>
           <input
@@ -34,7 +50,7 @@ export default function LoginComponent() {
           />
         </div>
         <div>
-          <button type="button" name="login">
+          <button type="button" name="login" onClick={handleSubmit}>
             Login
           </button>
         </div>
