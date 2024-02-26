@@ -6,6 +6,7 @@ import "./App.css";
 import LoginComponent from "./components/todo/LoginComponent.jsx";
 import WelcomeComponent from "./components/todo/WelcomeComponent.jsx";
 import ErrorComponent from "./components/todo/ErrorComponent.jsx";
+import ListTodosComponent from "./components/todo/ListTodosComponent.jsx";
 
 const router = createBrowserRouter([
   {
@@ -15,6 +16,10 @@ const router = createBrowserRouter([
   {
     path: "/welcome/:username",
     element: <WelcomeComponent />,
+  },
+  {
+    path: "/todos",
+    element: <ListTodosComponent />,
   },
   {
     path: "*",

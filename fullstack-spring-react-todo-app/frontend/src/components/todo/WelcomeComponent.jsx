@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 export default function WelcomeComponent() {
   const { username } = useParams();
@@ -7,6 +7,9 @@ export default function WelcomeComponent() {
   return (
     <div className="ErrorComponent">
       <h1>Welcome {username}</h1>
+      <div>
+        <Link to="/todos">See my todos</Link>
+      </div>
     </div>
   );
 }
