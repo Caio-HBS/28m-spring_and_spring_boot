@@ -13,7 +13,7 @@ const router = createBrowserRouter([
     element: <LoginComponent />,
   },
   {
-    path: "/welcome",
+    path: "/welcome/:username",
     element: <WelcomeComponent />,
   },
   {

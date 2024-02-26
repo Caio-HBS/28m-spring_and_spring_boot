@@ -20,7 +20,7 @@ export default function LoginComponent() {
   function handleSubmit() {
     if (username === "Caio-HBS" && password === "123") {
       setSubmitSuccess(true);
-      navigate("/welcome")
+      navigate(`/welcome/${username}`)
     } else {
       setSubmitError(true);
     }
