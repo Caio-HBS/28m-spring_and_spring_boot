@@ -1,9 +1,8 @@
-import React from 'react'
+import React from "react";
 
 export default function WelcomeComponent() {
   return (
-    <>
-      Welcome Component
-    </>
-  )
+  <div className="ErrorComponent">
+    <h1>Welcome to TodoApp</h1>
+  </div>);
 }

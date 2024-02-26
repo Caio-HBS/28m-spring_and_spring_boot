@@ -1,10 +1,13 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function LoginComponent() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [submitError, setSubmitError] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
+
+  const navigate = useNavigate();
 
   function handleUsernameChange(value) {
     setUsername(value);
@@ -17,6 +20,7 @@ export default function LoginComponent() {
   function handleSubmit() {
     if (username === "Caio-HBS" && password === "123") {
       setSubmitSuccess(true);
+      navigate("/welcome")
     } else {
       setSubmitError(true);
     }
