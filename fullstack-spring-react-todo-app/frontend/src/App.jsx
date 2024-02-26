@@ -1,15 +1,26 @@
 import React from "react";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import "./App.css";
 
-import Counter from "./components/counter/Counter.jsx";
-import TodoApp from "./components/todo/TodoApp.jsx";
+import LoginComponent from "./components/todo/LoginComponent.jsx";
+import WelcomeComponent from "./components/todo/WelcomeComponent.jsx";
+
+const router = createBrowserRouter([
+  {
+    path: "/login",
+    element: <LoginComponent />,
+  },
+  {
+    path: "/welcome",
+    element: <WelcomeComponent />,
+  },
+]);
 
 export default function App() {
   return (
     <div className="App">
-      <TodoApp />
-      {/* <Counter /> */}
+      <RouterProvider router={router} />
     </div>
   );
 }
