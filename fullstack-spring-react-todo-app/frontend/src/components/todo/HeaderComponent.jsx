@@ -1,6 +1,10 @@
 import React from "react";
 
+import { useAuth } from "./security/AuthContext.jsx";
+
 export default function HeaderComponent() {
+  const authContext = useAuth();
+
   return (
     <header className="border-bottom border-light border-5 mb-5 p-2">
       <div className="container">
@@ -27,16 +31,20 @@ export default function HeaderComponent() {
               </ul>
             </div>
             <ul className="navbar-nav">
-              <li className="nav-item fs-5">
-                <a className="nav-link" href="/">
-                  Login
-                </a>
-              </li>
-              <li className="nav-item fs-5">
-                <a className="nav-link" href="/logout">
-                  Logout
-                </a>
-              </li>
+              {!authContext.isAuthenticated && (
+                <li className="nav-item fs-5">
+                  <a className="nav-link" href="/">
+                    Login
+                  </a>
+                </li>
+              )}
+              {authContext.isAuthenticated && (
+                <li className="nav-item fs-5">
+                  <a className="nav-link" href="/logout">
+                    Logout
+                  </a>
+                </li>
+              )}
             </ul>
           </nav>
         </div>

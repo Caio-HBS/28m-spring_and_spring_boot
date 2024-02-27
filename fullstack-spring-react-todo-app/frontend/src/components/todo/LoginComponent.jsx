@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import { useAuth } from "./security/AuthContext.jsx";
+
 export default function LoginComponent() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -8,6 +10,8 @@ export default function LoginComponent() {
   const [submitSuccess, setSubmitSuccess] = useState(false);
 
   const navigate = useNavigate();
+
+  const authContext = useAuth();
 
   function handleUsernameChange(value) {
     setUsername(value);
@@ -19,9 +23,11 @@ export default function LoginComponent() {
 
   function handleSubmit() {
     if (username === "Caio-HBS" && password === "123") {
+      authContext.setAuthenticated(true);
       setSubmitSuccess(true);
-      navigate(`/welcome/${username}`)
+      navigate(`/welcome/${username}`);
     } else {
+      authContext.setAuthenticated(false);
       setSubmitError(true);
     }
   }
