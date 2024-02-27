@@ -14,7 +14,7 @@ import ListTodosComponent from "./components/todo/ListTodosComponent.jsx";
 
 const router = createBrowserRouter([
   {
-    path: "/login",
+    path: "/",
     element: <LoginComponent />,
   },
   {
