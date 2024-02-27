@@ -4,6 +4,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
+import AuthProvider from "./components/todo/security/AuthContext.jsx";
 import LoginComponent from "./components/todo/LoginComponent.jsx";
 import ErrorComponent from "./components/todo/ErrorComponent.jsx";
 import FooterComponent from "./components/todo/FooterComponent.jsx";
@@ -15,23 +16,29 @@ import ListTodosComponent from "./components/todo/ListTodosComponent.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <LoginComponent />,
-  },
-  {
-    path: "/logout",
-    element: <LogoutComponent />,
-  },
-  {
-    path: "/welcome/:username",
-    element: <WelcomeComponent />,
-  },
-  {
-    path: "/todos",
-    element: <ListTodosComponent />,
-  },
-  {
-    path: "*",
-    element: <ErrorComponent />,
+    element: <AuthProvider />,
+    children: [
+      {
+        index: true,
+        element: <LoginComponent />,
+      },
+      {
+        path: "/logout",
+        element: <LogoutComponent />,
+      },
+      {
+        path: "/welcome/:username",
+        element: <WelcomeComponent />,
+      },
+      {
+        path: "/todos",
+        element: <ListTodosComponent />,
+      },
+      {
+        path: "*",
+        element: <ErrorComponent />,
+      },
+    ],
   },
 ]);
 
