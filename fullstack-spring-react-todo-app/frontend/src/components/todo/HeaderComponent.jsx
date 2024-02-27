@@ -5,6 +5,12 @@ import { useAuth } from "./security/AuthContext.jsx";
 export default function HeaderComponent() {
   const authContext = useAuth();
 
+  function logout() {
+    if (authContext.isAuthenticated === true) {
+      authContext.setAuthenticated(false);
+    }
+  }
+
   return (
     <header className="border-bottom border-light border-5 mb-5 p-2">
       <div className="container">
@@ -40,7 +46,7 @@ export default function HeaderComponent() {
               )}
               {authContext.isAuthenticated && (
                 <li className="nav-item fs-5">
-                  <a className="nav-link" href="/logout">
+                  <a className="nav-link" href="/logout" onClick={logout}>
                     Logout
                   </a>
                 </li>

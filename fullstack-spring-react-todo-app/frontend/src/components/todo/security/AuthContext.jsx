@@ -11,8 +11,15 @@ export const useAuth = () => useContext(AuthContext);
 export default function AuthProvider() {
   const [isAuthenticated, setAuthenticated] = useState(false);
 
+  function login() {
+    setAuthenticated(true);
+  }
+  function logout() {
+    setAuthenticated(false);
+  }
+
   return (
-    <AuthContext.Provider value={{ isAuthenticated, setAuthenticated }}>
+    <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
       <HeaderComponent />
       <Outlet />
       <FooterComponent />
