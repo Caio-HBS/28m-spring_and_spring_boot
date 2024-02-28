@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import { useAuth } from "./security/AuthContext.jsx";
 
@@ -7,7 +8,7 @@ export default function HeaderComponent() {
 
   function logout() {
     if (authContext.isAuthenticated === true) {
-      authContext.setAuthenticated(false);
+      authContext.logout();
     }
   }
 
@@ -25,30 +26,30 @@ export default function HeaderComponent() {
             <div className="collapse navbar-collapse">
               <ul className="navbar-nav">
                 <li className="nav-item fs-5">
-                  <a className="nav-link" href="/welcome/Caio-HBS">
+                  <Link className="nav-link" to="/welcome/Caio-HBS">
                     Home
-                  </a>
+                  </Link>
                 </li>
                 <li className="nav-item fs-5">
-                  <a className="nav-link" href="/todos">
+                  <Link className="nav-link" to="/todos">
                     Todos
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
             <ul className="navbar-nav">
               {!authContext.isAuthenticated && (
                 <li className="nav-item fs-5">
-                  <a className="nav-link" href="/">
+                  <Link className="nav-link" to="/">
                     Login
-                  </a>
+                  </Link>
                 </li>
               )}
               {authContext.isAuthenticated && (
                 <li className="nav-item fs-5">
-                  <a className="nav-link" href="/logout" onClick={logout}>
+                  <Link className="nav-link" to="/logout" onClick={logout}>
                     Logout
-                  </a>
+                  </Link>
                 </li>
               )}
             </ul>
