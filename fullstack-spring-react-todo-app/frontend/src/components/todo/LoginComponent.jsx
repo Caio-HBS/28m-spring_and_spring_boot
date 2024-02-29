@@ -22,7 +22,7 @@ export default function LoginComponent() {
 
   function handleSubmit() {
     if (username === "Caio-HBS" && password === "123") {
-      authContext.login();
+      authContext.login(username);
       navigate(`/welcome/${username}`);
     } else {
       authContext.logout();
