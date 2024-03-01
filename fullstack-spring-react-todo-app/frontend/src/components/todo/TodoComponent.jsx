@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form, Field, ErrorMessage } from "formik";
 
 import { retrieveSingleTodoApi } from "./api/TodoApiService.jsx";
 import { useAuth } from "./security/AuthContext.jsx";
@@ -28,6 +28,20 @@ export default function TodoComponent() {
     console.log(values);
   }
 
+  function validate(values) {
+    let errors = {};
+
+    if (values.description.length < 5) {
+      errors.description = "Enter at least 5 characters for description.";
+    }
+
+    if (values.targetDate === null) {
+      errors.targetDate = "Enter a valid target date.";
+    }
+
+    return errors;
+  }
+
   return (
     <div className="container">
       <h1>Enter TODO details</h1>
@@ -36,9 +50,22 @@ export default function TodoComponent() {
           initialValues={{ description, targetDate }}
           enableReinitialize={true}
           onSubmit={onSubmitForm}
+          validate={validate}
+          validateOnChange={false}
+          validateOnBlur={false}
         >
           {(props) => (
             <Form>
+              <ErrorMessage
+                name="description"
+                component="div"
+                className="alert alert-warning"
+              />
+              <ErrorMessage
+                name="targetDate"
+                component="div"
+                className="alert alert-warning"
+              />
               <fieldset className="form-group">
                 <Field
                   type="text"
