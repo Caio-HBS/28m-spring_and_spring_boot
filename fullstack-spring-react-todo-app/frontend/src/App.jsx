@@ -7,12 +7,13 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
 import AuthProvider from "./components/todo/security/AuthContext.jsx";
+import TodoComponent from "./components/todo/TodoComponent.jsx";
 import LoginComponent from "./components/todo/LoginComponent.jsx";
 import ErrorComponent from "./components/todo/ErrorComponent.jsx";
+import HeaderComponent from "./components/todo/HeaderComponent.jsx";
 import LogoutComponent from "./components/todo/LogoutComponent.jsx";
 import WelcomeComponent from "./components/todo/WelcomeComponent.jsx";
 import ListTodosComponent from "./components/todo/ListTodosComponent.jsx";
-import HeaderComponent from "./components/todo/HeaderComponent.jsx";
 
 function AuthenticatedRoute({ children }) {
   const authContext = useAuth();
@@ -46,6 +47,14 @@ export default function App() {
               element={
                 <AuthenticatedRoute>
                   <ListTodosComponent />
+                </AuthenticatedRoute>
+              }
+            />
+            <Route
+              path="/todo/:id"
+              element={
+                <AuthenticatedRoute>
+                  <TodoComponent />
                 </AuthenticatedRoute>
               }
             />
