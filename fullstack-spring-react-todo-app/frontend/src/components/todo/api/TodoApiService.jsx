@@ -8,3 +8,6 @@ export const deleteSingleTodoApi = (username, id) =>
 
 export const retrieveSingleTodoApi = (username, id) =>
   apiClient.get(`/users/${username}/todos/${id}`);
+
+export const updateTodoApi = (username, id, todoDetails) =>
+  apiClient.put(`/users/${username}/todos/${id}`, todoDetails);
