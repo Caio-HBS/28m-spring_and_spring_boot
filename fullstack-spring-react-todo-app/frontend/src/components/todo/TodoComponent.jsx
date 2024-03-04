@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 
-import { retrieveSingleTodoApi } from "./api/TodoApiService.jsx";
+import { retrieveSingleTodoApi, updateTodoApi } from "./api/TodoApiService.jsx";
 import { useAuth } from "./security/AuthContext.jsx";
 
 export default function TodoComponent() {
@@ -10,6 +10,8 @@ export default function TodoComponent() {
   const [targetDate, setTargetDate] = useState("");
 
   const { id } = useParams();
+
+  const navigate = useNavigate();
 
   const authContext = useAuth();
 
@@ -25,7 +27,18 @@ export default function TodoComponent() {
   }
 
   function onSubmitForm(values) {
-    console.log(values);
+    const todo = {
+      id: id,
+      username: authContext.username,
+      description: values.description,
+      targetDate: values.targetDate,
+      done: false,
+    };
+    updateTodoApi(authContext.username, id, todo)
+      .then((response) => {
+        navigate("/todos")
+      })
+      .catch((error) => console.log(error));
   }
 
   function validate(values) {
