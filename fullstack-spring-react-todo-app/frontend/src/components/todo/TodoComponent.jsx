@@ -1,8 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
+import moment from "moment";
 
-import { retrieveSingleTodoApi, updateTodoApi } from "./api/TodoApiService.jsx";
+import {
+  createTodoApi,
+  retrieveSingleTodoApi,
+  updateTodoApi,
+} from "./api/TodoApiService.jsx";
 import { useAuth } from "./security/AuthContext.jsx";
 
 export default function TodoComponent() {
@@ -18,12 +23,14 @@ export default function TodoComponent() {
   useEffect(() => retrieveTodo(), [id]);
 
   function retrieveTodo() {
-    retrieveSingleTodoApi(authContext.username, id)
-      .then((response) => {
-        setDescription(response.data.description);
-        setTargetDate(response.data.targetDate);
-      })
-      .catch((error) => console.log(error));
+    if (id != -1) {
+      retrieveSingleTodoApi(authContext.username, id)
+        .then((response) => {
+          setDescription(response.data.description);
+          setTargetDate(response.data.targetDate);
+        })
+        .catch((error) => console.log(error));
+    }
   }
 
   function onSubmitForm(values) {
@@ -34,11 +41,18 @@ export default function TodoComponent() {
       targetDate: values.targetDate,
       done: false,
     };
-    updateTodoApi(authContext.username, id, todo)
-      .then((response) => {
-        navigate("/todos")
-      })
-      .catch((error) => console.log(error));
+
+    if (id == -1) {
+      createTodoApi(authContext.username, todo)
+        .then((response) => navigate("/todos"))
+        .catch((error) => console.log(error));
+    } else {
+      updateTodoApi(authContext.username, id, todo)
+        .then((response) => {
+          navigate("/todos");
+        })
+        .catch((error) => console.log(error));
+    }
   }
 
   function validate(values) {
@@ -48,7 +62,12 @@ export default function TodoComponent() {
       errors.description = "Enter at least 5 characters for description.";
     }
 
-    if (values.targetDate === null) {
+    if (
+      values.targetDate === null ||
+      values.targetDate == "" ||
+      !moment(values.targetDate).isValid() ||
+      moment(values.targetDate).isBefore()
+    ) {
       errors.targetDate = "Enter a valid target date.";
     }
 

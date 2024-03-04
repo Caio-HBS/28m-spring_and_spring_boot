@@ -38,6 +38,10 @@ export default function ListTodosComponent() {
     navigate(`/todo/${id}`);
   }
 
+  function handleAddNewTodo() {
+    navigate("/todo/-1");
+  }
+
   return (
     <div className="container">
       <h1>Your TODOs</h1>
@@ -80,6 +84,9 @@ export default function ListTodosComponent() {
             ))}
           </tbody>
         </table>
+      </div>
+      <div className="btn btn-success m-5" onClick={handleAddNewTodo}>
+        New TODO
       </div>
     </div>
   );
