@@ -36,7 +36,7 @@ public class TodoResource {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping(path="/users/{username}/todos{id}")
+    @PutMapping(path="/users/{username}/todos/{id}")
     public Todo updateTodo(
             @PathVariable String username,
             @PathVariable int id,
