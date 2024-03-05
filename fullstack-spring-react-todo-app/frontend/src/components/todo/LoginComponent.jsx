@@ -20,9 +20,8 @@ export default function LoginComponent() {
     setPassword(value);
   }
 
-  function handleSubmit() {
-    if (username === "Caio-HBS" && password === "123") {
-      authContext.login(username);
+  async function handleSubmit() {
+    if (await authContext.login(username, password)) {
       navigate(`/welcome/${username}`);
     } else {
       authContext.logout();
