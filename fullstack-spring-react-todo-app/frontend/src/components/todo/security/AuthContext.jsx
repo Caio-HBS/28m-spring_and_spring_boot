@@ -1,6 +1,9 @@
 import { createContext, useContext, useState } from "react";
 import { executeBasicAuthenticationService } from "../api/AuthenticationApiService";
 
+
+import { apiClient } from "../api/ApiClient";
+
 export const AuthContext = createContext();
 
 export const useAuth = () => useContext(AuthContext);
@@ -18,8 +21,14 @@ export default function AuthProvider({ children }) {
 
       if (response.status == 200) {
         setAuthenticated(true);
-        setUsername(username);
+        setUsername(user);
         setToken(basicToken);
+
+        apiClient.interceptors.request.use((config) => {
+          config.headers.Authorization = basicToken;
+          return config;
+        });
+
         return true;
       } else {
         logout();
