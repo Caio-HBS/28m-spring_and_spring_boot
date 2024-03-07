@@ -4,27 +4,28 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
-//@RestController
-public class TodoResource {
+@RestController
+public class TodoJpaResource {
 
-    private final TodoService todoService;
+    private final TodoRepository todoRepository;
 
-    public TodoResource(TodoService todoService) {
-        this.todoService = todoService;
+    public TodoJpaResource(TodoRepository todoRepository) {
+        this.todoRepository = todoRepository;
     }
 
     @GetMapping(path="/users/{username}/todos")
     public List<Todo> retrieveTodos(@PathVariable String username) {
-        return todoService.findByUsername(username);
+        return todoRepository.findByUsername(username);
     }
 
     @GetMapping(path="/users/{username}/todos/{id}")
-    public Todo retrieveSingleTodo(
+    public Optional<Todo> retrieveSingleTodo(
             @PathVariable String username,
             @PathVariable int id
     ) {
-        return todoService.findById(id);
+        return todoRepository.findById(id);
     }
 
     @DeleteMapping(path="/users/{username}/todos/{id}")
@@ -32,7 +33,7 @@ public class TodoResource {
             @PathVariable String username,
             @PathVariable int id
     ) {
-        todoService.deleteById(id);
+        todoRepository.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 
@@ -42,7 +43,7 @@ public class TodoResource {
             @PathVariable int id,
             @RequestBody Todo todo
     ) {
-        todoService.updateTodo(todo);
+        todoRepository.save(todo);
         return todo;
     }
 
@@ -50,11 +51,9 @@ public class TodoResource {
     public Todo createNewTodo(
             @PathVariable String username, @RequestBody Todo todo
     ) {
-        Todo createdTodo = todoService.addTodo(
-                todo.getUsername(), todo.getDescription(),
-                todo.getTargetDate(), todo.isDone()
-        );
-        return createdTodo;
+        todo.setUsername(username);
+        todo.setId(null);
+        return todoRepository.save(todo);
     }
 
 }
