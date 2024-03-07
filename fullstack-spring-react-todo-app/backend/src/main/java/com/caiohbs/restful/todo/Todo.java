@@ -5,17 +5,22 @@ package com.caiohbs.restful.todo;
 //import jakarta.persistence.Id;
 //import jakarta.validation.constraints.Size;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.validation.constraints.Size;
+
 import java.time.LocalDate;
 
-//@Entity
+@Entity
 public class Todo {
 
-//    @Id
-//    @GeneratedValue
+    @Id
+    @GeneratedValue
     private int id;
     private String username;
 
-//    @Size(min=10, message="Description should have at least 10 characters.", max=100)
+    @Size(min=10, message="Description should have at least 10 characters.", max=100)
     private String description;
     private LocalDate targetDate;
     private boolean done;
