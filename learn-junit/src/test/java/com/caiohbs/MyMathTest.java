@@ -7,15 +7,26 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class MyMathTest {
 
+    private final MyMath math = new MyMath();
+
     @Test
-    void test() {
-        MyMath math = new MyMath();
-        int[] randomNums = {1, 2, 3};
+    void testCalcSumWithThreeElements() {
+        assertEquals(6, math.calcSum(new int[] {1, 2, 3}));
+    }
 
-        int result = math.calcSum(randomNums);
-        int expectedResult = 6;
+    @Test
+    void testCalcSumNoElements() {
+        assertEquals(0, math.calcSum(new int[] {}));
+    }
 
-        assertEquals(expectedResult, result);
+    @Test
+    void testCalcSumNegativeNumbers() {
+        assertEquals(-45, math.calcSum(new int[] {-1, -10, -34}));
+    }
+
+    @Test
+    void testCalcSumSingleElement() {
+        assertEquals(54, math.calcSum(new int[] {54}));
     }
 
 }
