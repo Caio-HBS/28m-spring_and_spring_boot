@@ -5,6 +5,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 import static org.springframework.security.config.Customizer.withDefaults;
@@ -27,6 +31,21 @@ public class BasicAuthSecurityConfiguration {
         );
 
         return http.build();
+    }
+
+    @Bean
+    public UserDetailsService userDetailsService() {
+        var user = User.withUsername("Caio-HBS")
+                .password("{noop}123")
+                .roles(String.valueOf(UserRoles.USER))
+                .build();
+
+        var admin = User.withUsername("admin")
+                .password("{noop}123")
+                .roles(String.valueOf(UserRoles.ADMIN))
+                .build();
+
+        return new InMemoryUserDetailsManager(user, admin);
     }
 
 }
