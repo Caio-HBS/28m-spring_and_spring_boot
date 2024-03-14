@@ -11,7 +11,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -19,10 +19,10 @@ import javax.sql.DataSource;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
-@Configuration
+//@Configuration
 public class BasicAuthSecurityConfiguration {
 
-    @Bean
+    //@Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(
                 auth -> auth.anyRequest().authenticated()
@@ -42,7 +42,7 @@ public class BasicAuthSecurityConfiguration {
         return http.build();
     }
 
-    @Bean
+    //@Bean
     public DataSource dataSource() {
         return new EmbeddedDatabaseBuilder()
                 .setType(EmbeddedDatabaseType.H2)
@@ -50,15 +50,19 @@ public class BasicAuthSecurityConfiguration {
                 .build();
     }
 
-    @Bean
+    //@Bean
     public UserDetailsService userDetailsService(DataSource dataSource) {
         var user = User.withUsername("Caio-HBS")
-                .password("{noop}123")
+                //.password("{noop}123")
+                .password("123")
+                .passwordEncoder(str -> passwordEncoder().encode(str))
                 .roles(String.valueOf(UserRoles.USER))
                 .build();
 
         var admin = User.withUsername("admin")
-                .password("{noop}123")
+                //.password("{noop}123")
+                .password("123")
+                .passwordEncoder(str -> passwordEncoder().encode(str))
                 .roles(String.valueOf(UserRoles.ADMIN))
                 .build();
 
@@ -67,6 +71,11 @@ public class BasicAuthSecurityConfiguration {
         jdbcUserDetailsManager.createUser(admin);
 
         return jdbcUserDetailsManager;
+    }
+
+    //@Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
 }
