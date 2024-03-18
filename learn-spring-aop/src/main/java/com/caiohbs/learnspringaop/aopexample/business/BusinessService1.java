@@ -15,7 +15,7 @@ public class BusinessService1 {
     }
 
     public int calculateMax() {
-        int[] data = dataService1.retrieveData(true);
+        int[] data = dataService1.retrieveData(false);
 
         return Arrays.stream(data).max().orElse(0);
 
