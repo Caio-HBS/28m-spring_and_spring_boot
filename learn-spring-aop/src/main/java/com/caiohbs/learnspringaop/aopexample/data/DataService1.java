@@ -5,8 +5,13 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class DataService1 {
 
-    public int[] retrieveData() {
-        return new int[] {11, 23, 55, 102};
+    public int[] retrieveData(boolean throwMe) {
+
+        if (throwMe) {
+            throw new RuntimeException("Something went wrong when trying to retrieve data.");
+        }
+
+        return new int[]{11, 23, 55, 102};
     }
 
 }
