@@ -12,7 +12,7 @@ public class LoggingAspect {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    @Before("execution(* com.caiohbs.learnspringaop.aopexample.*.*.*(..))")
+    @Before("com.caiohbs.learnspringaop.aopexample.aspects.CommonPointcutConfig.allPackageConfigUsingBean()")
     public void logMethodCallBeforeExecution(JoinPoint joinPoint) {
         logger.info(
                 "BEFORE ASPECT: {} is called with the following arguments: {}.",
@@ -20,13 +20,13 @@ public class LoggingAspect {
         );
     }
 
-    @After("execution(* com.caiohbs.learnspringaop.aopexample.*.*.*(..))")
+    @After("com.caiohbs.learnspringaop.aopexample.aspects.CommonPointcutConfig.businessPackageConfig()")
     public void logMethodCallAfterExecution(JoinPoint joinPoint) {
         logger.info("AFTER ASPECT: {} has been executed.", joinPoint);
     }
 
     @AfterThrowing(
-            pointcut="execution(* com.caiohbs.learnspringaop.aopexample.*.*.*(..))",
+            pointcut="com.caiohbs.learnspringaop.aopexample.aspects.CommonPointcutConfig.businessAndDataPackagesConfig())",
             throwing="exception"
     )
     public void logMethodCallAfterException(JoinPoint joinPoint, Exception exception) {
@@ -37,7 +37,7 @@ public class LoggingAspect {
     }
 
     @AfterReturning(
-            pointcut="execution(* com.caiohbs.learnspringaop.aopexample.*.*.*(..))",
+            pointcut="com.caiohbs.learnspringaop.aopexample.aspects.CommonPointcutConfig.dataPackageConfig())",
             returning="resultValue"
     )
     public void logMethodCallAfterSuccessfulExecution(JoinPoint joinPoint, Object resultValue) {
